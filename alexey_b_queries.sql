@@ -1,5 +1,5 @@
 #1
-SELECT * FROM employee ORDER BY employee_first_name;
+SELECT * FROM employee ORDER BY employee_last_name;
 
 #2
 SELECT employee.employee_first_name, employee.employee_last_name,
