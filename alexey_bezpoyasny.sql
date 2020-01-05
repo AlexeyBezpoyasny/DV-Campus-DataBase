@@ -59,8 +59,8 @@ CREATE TABLE `income` (
   `daily_profit` decimal(15,2) DEFAULT NULL COMMENT 'Income for a day',
   KEY `INCOME_EMPLOYEE_ID_EMPLOYEE_EMPLOYEE_ID` (`employee_id`),
   KEY `INCOME_TRANSPORT_ID_TRANSPORT_TRANSPORT_ID` (`transport_id`),
-  CONSTRAINT `INCOME_EMPLOYEE_ID_EMPLOYEE_EMPLOYEE_ID` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`) ON DELETE NO ACTION,
-  CONSTRAINT `INCOME_TRANSPORT_ID_TRANSPORT_TRANSPORT_ID` FOREIGN KEY (`transport_id`) REFERENCES `transport` (`transport_id`) ON DELETE NO ACTION
+  CONSTRAINT `INCOME_EMPLOYEE_ID_EMPLOYEE_EMPLOYEE_ID` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`) ON DELETE CASCADE,
+  CONSTRAINT `INCOME_TRANSPORT_ID_TRANSPORT_TRANSPORT_ID` FOREIGN KEY (`transport_id`) REFERENCES `transport` (`transport_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Income';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -84,7 +84,8 @@ DROP TABLE IF EXISTS `position`;
 CREATE TABLE `position` (
   `position_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Position ID',
   `position_name` varchar(127) NOT NULL COMMENT 'Position Name',
-  PRIMARY KEY (`position_id`)
+  PRIMARY KEY (`position_id`),
+  UNIQUE KEY `POSITION_NAME` (`position_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='Positions';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -94,7 +95,7 @@ CREATE TABLE `position` (
 
 LOCK TABLES `position` WRITE;
 /*!40000 ALTER TABLE `position` DISABLE KEYS */;
-INSERT INTO `position` VALUES (1,'CEO'),(2,'Deputy CEO'),(3,'Accountant'),(4,'Driver'),(5,'System Administrator'),(6,'Mechanic'),(7,'Cleaner');
+INSERT INTO `position` VALUES (3,'Accountant'),(1,'CEO'),(7,'Cleaner'),(2,'Deputy CEO'),(4,'Driver'),(6,'Mechanic'),(5,'System Administrator');
 /*!40000 ALTER TABLE `position` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -113,8 +114,8 @@ CREATE TABLE `salary` (
   PRIMARY KEY (`salary_id`),
   KEY `SALARY_EMPLOYEE_ID_EMPLOYEE_EMPLOYEE_ID` (`employee_id`),
   KEY `SALARY_POSITION_ID_POSITION_POSITION_ID` (`position_id`),
-  CONSTRAINT `SALARY_EMPLOYEE_ID_EMPLOYEE_EMPLOYEE_ID` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`) ON DELETE NO ACTION,
-  CONSTRAINT `SALARY_POSITION_ID_POSITION_POSITION_ID` FOREIGN KEY (`position_id`) REFERENCES `position` (`position_id`) ON DELETE NO ACTION
+  CONSTRAINT `SALARY_EMPLOYEE_ID_EMPLOYEE_EMPLOYEE_ID` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`) ON DELETE CASCADE,
+  CONSTRAINT `SALARY_POSITION_ID_POSITION_POSITION_ID` FOREIGN KEY (`position_id`) REFERENCES `position` (`position_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8 COMMENT='Salary';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -139,7 +140,8 @@ CREATE TABLE `transport` (
   `transport_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Transport ID',
   `type_of_transport` varchar(127) NOT NULL COMMENT 'Type of transport',
   `license_plate` varchar(10) NOT NULL COMMENT 'Transport license plate',
-  PRIMARY KEY (`transport_id`)
+  PRIMARY KEY (`transport_id`),
+  UNIQUE KEY `LICENSE_PLATE` (`license_plate`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='Transport';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -162,4 +164,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-12-16  2:28:35
+-- Dump completed on 2020-01-05  3:17:29
